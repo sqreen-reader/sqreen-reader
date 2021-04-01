@@ -41,3 +41,9 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          JAVA_HOME: /usr/java/openjdk-15
