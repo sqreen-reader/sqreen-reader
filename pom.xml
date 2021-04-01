@@ -4,6 +4,16 @@
   <groupId>net.mporter</groupId>
   <artifactId>sqreen-reader</artifactId>
   <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>11</java.version>
+  </properties>
+
+
+  <modules>
+    <module>screen-grabber</module>
+  </modules>
   <packaging>pom</packaging>
   <name>sQReen Reader</name>
 </project>
