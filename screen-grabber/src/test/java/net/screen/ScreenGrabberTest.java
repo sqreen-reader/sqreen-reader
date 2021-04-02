@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ScreenGrabberTest {
+class ScreenGrabberTest {
 
     @Mock
     private Robot robot;
@@ -23,7 +23,7 @@ public class ScreenGrabberTest {
 
     @DisplayName("Should grab image from screen")
     @Test
-    public void testGrab() {
+    void testGrab() {
 
         ImageGrabber imageGrabber = new ScreenGrabber(robot);
 
