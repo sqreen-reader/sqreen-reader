@@ -24,10 +24,10 @@ jobs:
           java-version: 1.11
 
       - name: Build with Maven
-        run: ./mvnw clean verify
+        run: ./mvnw clean verify -Djava.awt.headless=true
 
       - name: SonarCloud Scan
-        run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Djava.awt.headless=true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

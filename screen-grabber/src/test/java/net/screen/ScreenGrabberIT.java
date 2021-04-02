@@ -1,5 +1,6 @@
 package net.screen;
 
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,12 @@ class ScreenGrabberIT {
 
     @BeforeEach
     void setUp() {
+        Assumptions.assumeTrue(!isHeadless());
         screenCapture.delete();
+    }
+
+    private boolean isHeadless() {
+        return "true".equals(System.getProperty("java.awt.headless"));
     }
 
     @Test
