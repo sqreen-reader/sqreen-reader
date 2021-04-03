@@ -17,6 +17,7 @@
 
   <modules>
     <module>screen-grabber</module>
+    <module>qr-reader</module>
   </modules>
   <packaging>pom</packaging>
   <name>sQReen Reader</name>
