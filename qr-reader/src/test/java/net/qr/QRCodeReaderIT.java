@@ -24,7 +24,7 @@ class QRCodeReaderIT {
     }
 
     @Test
-    @DisplayName("Should read image has more than just QR code")
+    @DisplayName("Should read image that has more than just the QR code")
     void testReadDirtyRCode() throws IOException {
         QRCodeReader qrCodeReader = new QRCodeReader(new MultiFormatReader());
         BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/dirty-qr.png"));
