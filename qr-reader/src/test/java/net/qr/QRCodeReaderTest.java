@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,10 +45,11 @@ class QRCodeReaderTest {
 
     @Test
     @DisplayName("Should throw error if failed to parse QR Code")
-    void testFailure() throws FormatException, ChecksumException, NotFoundException {
+    void testFailure() throws FormatException, ChecksumException, NotFoundException, IOException {
         when(reader.decode(any(BinaryBitmap.class))).thenThrow(FormatException.class);
+        BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/test.jpg"));
         assertThrows(IOException.class, () -> {
-            qrCodeReader.read(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
+            qrCodeReader.read(image);
         });
     }
 
