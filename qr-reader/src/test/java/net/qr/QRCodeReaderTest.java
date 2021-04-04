@@ -2,6 +2,7 @@ package net.qr;
 
 
 import com.google.zxing.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +23,13 @@ class QRCodeReaderTest {
     @Mock
     private Reader reader;
 
+    private QRCodeReader qrCodeReader;
+
+    @BeforeEach
+    void setup() {
+        qrCodeReader = new QRCodeReader(reader);
+    }
+
     @Test
     @DisplayName("Should read QRCodes")
     void testReadQRCode() throws NotFoundException, FormatException, ChecksumException, IOException {
@@ -28,10 +37,18 @@ class QRCodeReaderTest {
         Result result = new Result(expectedUrl, null, null, null);
         when(reader.decode(any(BinaryBitmap.class))).thenReturn(result);
 
-        QRCodeReader qrCodeReader = new QRCodeReader(reader);
         String qrCodeReadResult = qrCodeReader.read(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
 
         assertEquals(expectedUrl, qrCodeReadResult);
+    }
+
+    @Test
+    @DisplayName("Should throw error if failed to parse QR Code")
+    void testFailure() throws FormatException, ChecksumException, NotFoundException {
+        when(reader.decode(any(BinaryBitmap.class))).thenThrow(FormatException.class);
+        assertThrows(IOException.class, () -> {
+            qrCodeReader.read(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
+        });
     }
 
 }
