@@ -2,10 +2,12 @@ package net.sqreenreader.service;
 
 import net.qr.BarCodeReader;
 import net.screen.ImageGrabber;
+import org.springframework.stereotype.Service;
 
 import java.awt.Rectangle;
 import java.io.IOException;
 
+@Service
 public class BarcodeParserService implements ImageParser {
 
     private final ImageGrabber imageGrabber;
