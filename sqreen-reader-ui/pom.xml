@@ -20,12 +20,10 @@
         <dependency>
             <groupId>net.mporter</groupId>
             <artifactId>screen-grabber</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.mporter</groupId>
             <artifactId>qr-reader</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
