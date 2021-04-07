@@ -1,6 +1,10 @@
 package net.sqreenreader.controller;
 
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 import net.sqreenreader.service.BarcodeParser;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,7 +16,7 @@ import java.awt.Rectangle;
 import java.awt.Dimension;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -23,19 +27,44 @@ class SqreenReaderControllerTest {
     private BarcodeParser barcodeParser;
 
     @Mock
-    Toolkit toolkit;
+    private Toolkit toolkit;
+
+    private String expectedBarcodeData = "www.google.com";
+
+    private SqreenReaderController sqreenReaderController;
+
+    @BeforeAll
+    static void beforeAll() {
+        Platform.startup(()->{});
+    }
+
+    @BeforeEach
+    void setup() throws IOException {
+        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
+        when(toolkit.getScreenSize()).thenReturn(new Dimension());
+        sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit);
+    }
 
     @Test
     @DisplayName("Should get barcode")
     void testGetCurrentBarcode() throws IOException {
-        String expectedBarcodeData = "www.google.com";
-        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
-        when(toolkit.getScreenSize()).thenReturn(new Dimension());
-        SqreenReaderController sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit);
-
         String barCodeData = sqreenReaderController.getCurrentBarCode();
-
         assertEquals(expectedBarcodeData, barCodeData);
+    }
+
+    @Test
+    @DisplayName("Should add barcode to scene")
+    void testUpdateSceneWithBarCode() throws IOException {
+        Label noQRCode = new Label();
+        Label latestQRCode = new Label();
+        sqreenReaderController.setNoQRCode(noQRCode);
+        sqreenReaderController.setLatestQRCode(latestQRCode);
+
+        sqreenReaderController.updateSceneWithBarCode();
+
+        assertTrue(latestQRCode.isVisible());
+        assertEquals(expectedBarcodeData, latestQRCode.getText());
+        assertFalse(noQRCode.isVisible());
     }
 
 }
