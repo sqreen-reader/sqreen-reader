@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 class BarcodeParserServiceIT {
 
     @Autowired
-    private ImageParser imageParser;
+    private BarcodeParser barcodeParser;
 
     @MockBean
     private ImageGrabber imageGrabber;
@@ -31,7 +31,7 @@ class BarcodeParserServiceIT {
         when(imageGrabber.grab(any(Rectangle.class)))
                 .thenReturn(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
 
-        assertEquals("https://www.geeksforgeeks.org", imageParser.parse(new Rectangle()));
+        assertEquals("https://www.geeksforgeeks.org", barcodeParser.parse(new Rectangle()));
     }
 
 }

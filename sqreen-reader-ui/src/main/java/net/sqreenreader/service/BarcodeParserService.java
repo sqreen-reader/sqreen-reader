@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.io.IOException;
 
 @Service
-public class BarcodeParserService implements ImageParser {
+public class BarcodeParserService implements BarcodeParser {
 
     private final ImageGrabber imageGrabber;
 
