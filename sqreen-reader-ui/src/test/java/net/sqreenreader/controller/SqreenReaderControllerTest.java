@@ -36,6 +36,9 @@ class SqreenReaderControllerTest {
 
     @BeforeAll
     static void beforeAll() {
+        System.setProperty("glass.platform", "Monocle");
+        System.setProperty("monocle.platform", "Headless");
+        System.setProperty("prism.order", "sw");
         Platform.startup(()->{});
     }
 
