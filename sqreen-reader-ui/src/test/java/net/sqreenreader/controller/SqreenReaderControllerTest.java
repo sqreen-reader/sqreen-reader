@@ -15,6 +15,7 @@ import java.awt.Toolkit;
 import java.awt.Rectangle;
 import java.awt.Dimension;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,8 +40,7 @@ class SqreenReaderControllerTest {
     }
 
     @BeforeEach
-    void setup() throws IOException {
-        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
+    void setup() {
         when(toolkit.getScreenSize()).thenReturn(new Dimension());
         sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit);
     }
@@ -48,23 +48,41 @@ class SqreenReaderControllerTest {
     @Test
     @DisplayName("Should get barcode")
     void testGetCurrentBarcode() throws IOException {
+        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
         String barCodeData = sqreenReaderController.getCurrentBarCode();
         assertEquals(expectedBarcodeData, barCodeData);
     }
 
     @Test
     @DisplayName("Should add barcode to scene")
-    void testUpdateSceneWithBarCode() throws IOException {
+    void testUpdateSceneWithBarCode() throws IOException, InterruptedException {
+        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
         Label noQRCode = new Label();
         Label latestQRCode = new Label();
         sqreenReaderController.setNoQRCode(noQRCode);
         sqreenReaderController.setLatestQRCode(latestQRCode);
 
         sqreenReaderController.updateSceneWithBarCode();
+        TimeUnit.SECONDS.sleep(1);
 
         assertTrue(latestQRCode.isVisible());
         assertEquals(expectedBarcodeData, latestQRCode.getText());
         assertFalse(noQRCode.isVisible());
+    }
+
+    @Test
+    @DisplayName("Should not update barcode if null")
+    void testNullBarcode() throws IOException, InterruptedException {
+        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(null);
+        Label noQRCode = new Label();
+        Label latestQRCode = new Label();
+        sqreenReaderController.setNoQRCode(noQRCode);
+        sqreenReaderController.setLatestQRCode(latestQRCode);
+
+        sqreenReaderController.updateSceneWithBarCode();
+        TimeUnit.SECONDS.sleep(1);
+
+        assertTrue(noQRCode.isVisible());
     }
 
 }

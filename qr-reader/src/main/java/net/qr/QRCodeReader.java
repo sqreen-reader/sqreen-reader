@@ -23,7 +23,9 @@ public class QRCodeReader implements BarCodeReader {
     public String read(final BufferedImage image) throws IOException {
         try {
             return tryRead(image);
-        } catch (FormatException | ChecksumException | NotFoundException e) {
+        } catch (NotFoundException e) {
+            return null;
+        } catch (FormatException | ChecksumException e) {
             throw new IOException(e.getMessage(), e);
         }
     }

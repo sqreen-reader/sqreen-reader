@@ -1,7 +1,9 @@
 package net.sqreenreader.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import net.sqreenreader.service.BarcodeParser;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import java.awt.Toolkit;
@@ -31,11 +33,20 @@ public class SqreenReaderController {
         return barcodeParser.parse(new Rectangle(toolkit.getScreenSize()));
     }
 
+    @Scheduled(fixedRate = 1)
     public void updateSceneWithBarCode() throws IOException {
         String barCode = getCurrentBarCode();
-        noQRCode.setVisible(false);
-        latestQRCode.setVisible(true);
-        latestQRCode.setText(barCode);
+        if (barCode != null) {
+            updateLabels(barCode);
+        }
+    }
+
+    private void updateLabels(final String barCode) {
+        Platform.runLater(() -> {
+            noQRCode.setVisible(false);
+            latestQRCode.setVisible(true);
+            latestQRCode.setText(barCode);
+        });
     }
 
 
