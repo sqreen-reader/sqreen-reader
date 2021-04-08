@@ -1,6 +1,7 @@
 package net.sqreenreader.config;
 
 import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
 import net.qr.BarCodeReader;
 import net.qr.QRCodeReader;
 import net.screen.ImageGrabber;
@@ -24,7 +25,7 @@ public class SqreenReaderConfiguration {
 
     @Bean
     public BarCodeReader barCodeReader() {
-        return new QRCodeReader(new MultiFormatReader());
+        return new QRCodeReader(new MultiFormatReader(), new MultiFormatWriter());
     }
 
     @Bean

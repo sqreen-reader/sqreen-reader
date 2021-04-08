@@ -13,8 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -28,7 +27,7 @@ class QRCodeReaderTest {
 
     @BeforeEach
     void setup() {
-        qrCodeReader = new QRCodeReader(reader);
+        qrCodeReader = new QRCodeReader(reader, new MultiFormatWriter());
     }
 
     @Test
@@ -41,6 +40,7 @@ class QRCodeReaderTest {
         Barcode qrCodeReadResult = qrCodeReader.read(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
 
         assertEquals(expectedUrl, qrCodeReadResult.getText());
+        assertNotNull(qrCodeReadResult.getImage());
     }
 
     @Test

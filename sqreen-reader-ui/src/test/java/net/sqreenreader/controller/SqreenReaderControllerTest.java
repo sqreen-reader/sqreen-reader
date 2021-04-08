@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.imageio.ImageIO;
 import java.awt.Toolkit;
 import java.awt.Rectangle;
 import java.awt.Dimension;
@@ -51,8 +52,8 @@ class SqreenReaderControllerTest {
     }
 
     @BeforeEach
-    void setup() {
-        expectedBarCode = new Barcode("www.google.com");
+    void setup() throws IOException {
+        expectedBarCode = new Barcode("www.google.com", ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
         sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit, hyperLinkOpener);
     }
 

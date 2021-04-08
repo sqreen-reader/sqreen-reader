@@ -32,8 +32,9 @@ class BarcodeParserServiceTest {
     @Test
     @DisplayName("Should parse Barcode")
     void  testParse() throws IOException {
-        Barcode expectedParsedBarcode = new Barcode("http://localhost:8080");
-        when(imageGrabber.grab(any(Rectangle.class))).thenReturn(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
+        BufferedImage expectedImage = ImageIO.read(getClass().getResourceAsStream("/test.jpg"));
+        Barcode expectedParsedBarcode = new Barcode("http://localhost:8080", expectedImage);
+        when(imageGrabber.grab(any(Rectangle.class))).thenReturn(expectedImage);
         when(barCodeReader.read(any(BufferedImage.class))).thenReturn(expectedParsedBarcode);
 
         BarcodeParserService barcodeParserService = new BarcodeParserService(imageGrabber, barCodeReader);
