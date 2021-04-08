@@ -38,9 +38,9 @@ class QRCodeReaderTest {
         Result result = new Result(expectedUrl, null, null, null);
         when(reader.decode(any(BinaryBitmap.class))).thenReturn(result);
 
-        String qrCodeReadResult = qrCodeReader.read(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
+        Barcode qrCodeReadResult = qrCodeReader.read(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
 
-        assertEquals(expectedUrl, qrCodeReadResult);
+        assertEquals(expectedUrl, qrCodeReadResult.getText());
     }
 
     @Test
@@ -48,9 +48,7 @@ class QRCodeReaderTest {
     void testFailure() throws FormatException, ChecksumException, NotFoundException, IOException {
         when(reader.decode(any(BinaryBitmap.class))).thenThrow(FormatException.class);
         BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/test.jpg"));
-        assertThrows(IOException.class, () -> {
-            qrCodeReader.read(image);
-        });
+        assertThrows(IOException.class, () -> qrCodeReader.read(image));
     }
 
 }

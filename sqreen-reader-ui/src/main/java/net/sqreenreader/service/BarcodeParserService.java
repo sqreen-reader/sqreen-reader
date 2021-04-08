@@ -21,6 +21,6 @@ public class BarcodeParserService implements BarcodeParser {
 
     @Override
     public String parse(final Rectangle dimensions) throws IOException {
-       return barCodeReader.read(imageGrabber.grab(dimensions));
+       return barCodeReader.read(imageGrabber.grab(dimensions)).getText();
     }
 }

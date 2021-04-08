@@ -2,6 +2,7 @@ package net.sqreenreader.service;
 
 
 import net.qr.BarCodeReader;
+import net.qr.Barcode;
 import net.screen.ImageGrabber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,14 +32,14 @@ class BarcodeParserServiceTest {
     @Test
     @DisplayName("Should parse Barcode")
     void  testParse() throws IOException {
-        String expectedParsedBarcode = "http://localhost:8080";
+        Barcode expectedParsedBarcode = new Barcode("http://localhost:8080");
         when(imageGrabber.grab(any(Rectangle.class))).thenReturn(ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
         when(barCodeReader.read(any(BufferedImage.class))).thenReturn(expectedParsedBarcode);
 
         BarcodeParserService barcodeParserService = new BarcodeParserService(imageGrabber, barCodeReader);
         String parseBarcode = barcodeParserService.parse(new Rectangle());
 
-        assertEquals(expectedParsedBarcode, parseBarcode);
+        assertEquals(expectedParsedBarcode.getText(), parseBarcode);
     }
 
 }

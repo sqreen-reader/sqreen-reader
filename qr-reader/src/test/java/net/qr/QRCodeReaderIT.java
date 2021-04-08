@@ -18,9 +18,9 @@ class QRCodeReaderIT {
     void testReadCleanQRCode() throws IOException {
         QRCodeReader qrCodeReader = new QRCodeReader(new MultiFormatReader());
         BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/test.jpg"));
-        String url = qrCodeReader.read(image);
+        Barcode barcode = qrCodeReader.read(image);
 
-        assertEquals("https://www.geeksforgeeks.org", url);
+        assertEquals("https://www.geeksforgeeks.org", barcode.getText());
     }
 
     @Test
@@ -28,8 +28,8 @@ class QRCodeReaderIT {
     void testReadDirtyRCode() throws IOException {
         QRCodeReader qrCodeReader = new QRCodeReader(new MultiFormatReader());
         BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/dirty-qr.png"));
-        String url = qrCodeReader.read(image);
+        Barcode barcode = qrCodeReader.read(image);
 
-        assertEquals("https://www.google.com/", url);
+        assertEquals("https://www.google.com/", barcode.getText());
     }
 }

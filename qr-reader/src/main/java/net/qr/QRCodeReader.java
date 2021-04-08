@@ -20,7 +20,7 @@ public class QRCodeReader implements BarCodeReader {
     }
 
     @Override
-    public String read(final BufferedImage image) throws IOException {
+    public Barcode read(final BufferedImage image) throws IOException {
         try {
             return tryRead(image);
         } catch (NotFoundException e) {
@@ -30,12 +30,12 @@ public class QRCodeReader implements BarCodeReader {
         }
     }
 
-    private String tryRead(final BufferedImage image) throws FormatException, ChecksumException, NotFoundException {
+    private Barcode tryRead(final BufferedImage image) throws FormatException, ChecksumException, NotFoundException {
         BinaryBitmap binaryBitmap = new BinaryBitmap(
                 new HybridBinarizer(
                         new BufferedImageLuminanceSource(image)
                 )
         );
-        return reader.decode(binaryBitmap).getText();
+        return new Barcode(reader.decode(binaryBitmap).getText());
     }
 }
