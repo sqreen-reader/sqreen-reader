@@ -17,11 +17,12 @@ import java.awt.Toolkit;
 import java.awt.Rectangle;
 import java.awt.Dimension;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class SqreenReaderControllerTest {
@@ -49,13 +50,14 @@ class SqreenReaderControllerTest {
 
     @BeforeEach
     void setup() {
-        when(toolkit.getScreenSize()).thenReturn(new Dimension());
+
         sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit, hyperLinkOpener);
     }
 
     @Test
     @DisplayName("Should get barcode")
     void testGetCurrentBarcode() throws IOException {
+        when(toolkit.getScreenSize()).thenReturn(new Dimension());
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
         String barCodeData = sqreenReaderController.getCurrentBarCode();
         assertEquals(expectedBarcodeData, barCodeData);
@@ -64,6 +66,7 @@ class SqreenReaderControllerTest {
     @Test
     @DisplayName("Should add barcode to scene")
     void testUpdateSceneWithBarCode() throws IOException, InterruptedException {
+        when(toolkit.getScreenSize()).thenReturn(new Dimension());
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
         Label noQRCode = new Label();
         Hyperlink latestQRCode = new Hyperlink();
@@ -81,6 +84,7 @@ class SqreenReaderControllerTest {
     @Test
     @DisplayName("Should not update barcode if null")
     void testNullBarcode() throws IOException, InterruptedException {
+        when(toolkit.getScreenSize()).thenReturn(new Dimension());
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(null);
         Label noQRCode = new Label();
         Hyperlink latestQRCode = new Hyperlink();
@@ -91,6 +95,17 @@ class SqreenReaderControllerTest {
         TimeUnit.SECONDS.sleep(1);
 
         assertTrue(noQRCode.isVisible());
+    }
+
+    @Test
+    @DisplayName("Should open QR links")
+    void testOpenLinks() throws IOException, URISyntaxException {
+        Hyperlink latestQRCode = new Hyperlink();
+        latestQRCode.setText("www.google.com");
+        sqreenReaderController.setLatestQRCode(latestQRCode);
+        sqreenReaderController.initialize();
+        latestQRCode.fire();
+        verify(hyperLinkOpener, times(1)).open("www.google.com");
     }
 
 }

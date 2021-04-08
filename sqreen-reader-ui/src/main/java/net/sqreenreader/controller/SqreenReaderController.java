@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 
 import java.awt.Toolkit;
 import java.awt.Rectangle;
+import java.io.IOError;
 import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javafx.scene.control.Label;
 
 @Controller
@@ -31,6 +34,22 @@ public class SqreenReaderController {
         this.barcodeParser = barcodeParser;
         this.toolkit = toolkit;
         this.hyperLinkOpener = hyperLinkOpener;
+    }
+
+    @FXML
+    protected void initialize() {
+        latestQRCode.setOnAction(actionEvent -> {
+          openLink();
+        });
+    }
+
+    private void openLink() {
+        try {
+            hyperLinkOpener.open(latestQRCode.getText());
+        } catch (IOException e) {
+            throw new IOError(e);
+        } catch (URISyntaxException ignored) {
+        }
     }
 
 
