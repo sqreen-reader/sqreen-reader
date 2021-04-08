@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import net.sqreenreader.service.BarcodeParser;
+import net.sqreenreader.url.HyperLinkOpener;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,9 @@ class SqreenReaderControllerTest {
     @Mock
     private Toolkit toolkit;
 
+    @Mock
+    private HyperLinkOpener hyperLinkOpener;
+
     private String expectedBarcodeData = "www.google.com";
 
     private SqreenReaderController sqreenReaderController;
@@ -46,7 +50,7 @@ class SqreenReaderControllerTest {
     @BeforeEach
     void setup() {
         when(toolkit.getScreenSize()).thenReturn(new Dimension());
-        sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit);
+        sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit, hyperLinkOpener);
     }
 
     @Test
