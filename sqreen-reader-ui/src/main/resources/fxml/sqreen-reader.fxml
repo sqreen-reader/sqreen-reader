@@ -2,9 +2,10 @@
 
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Hyperlink?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="net.sqreenreader.controller.SqreenReaderController">
     <Label fx:id="noQRCode" text="No Recent QR Codes"/>
-    <Label fx:id="latestQRCode"/>
+    <Hyperlink fx:id="latestQRCode"/>
 </VBox>

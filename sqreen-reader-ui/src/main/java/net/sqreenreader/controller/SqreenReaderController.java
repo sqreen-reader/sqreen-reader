@@ -2,6 +2,7 @@ package net.sqreenreader.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import net.sqreenreader.service.BarcodeParser;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class SqreenReaderController {
     private Label noQRCode;
 
     @FXML
-    private Label latestQRCode;
+    private Hyperlink latestQRCode;
 
     public SqreenReaderController(final BarcodeParser barcodeParser, final Toolkit toolkit) {
         this.barcodeParser = barcodeParser;
@@ -54,7 +55,7 @@ public class SqreenReaderController {
         this.noQRCode = noQRCode;
     }
 
-    public void setLatestQRCode(final Label latestQRCode) {
+    public void setLatestQRCode(final Hyperlink latestQRCode) {
         this.latestQRCode = latestQRCode;
     }
 

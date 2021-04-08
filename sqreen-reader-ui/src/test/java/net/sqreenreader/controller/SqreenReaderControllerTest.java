@@ -1,6 +1,7 @@
 package net.sqreenreader.controller;
 
 import javafx.application.Platform;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import net.sqreenreader.service.BarcodeParser;
 import org.junit.jupiter.api.BeforeAll;
@@ -61,7 +62,7 @@ class SqreenReaderControllerTest {
     void testUpdateSceneWithBarCode() throws IOException, InterruptedException {
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
         Label noQRCode = new Label();
-        Label latestQRCode = new Label();
+        Hyperlink latestQRCode = new Hyperlink();
         sqreenReaderController.setNoQRCode(noQRCode);
         sqreenReaderController.setLatestQRCode(latestQRCode);
 
@@ -78,7 +79,7 @@ class SqreenReaderControllerTest {
     void testNullBarcode() throws IOException, InterruptedException {
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(null);
         Label noQRCode = new Label();
-        Label latestQRCode = new Label();
+        Hyperlink latestQRCode = new Hyperlink();
         sqreenReaderController.setNoQRCode(noQRCode);
         sqreenReaderController.setLatestQRCode(latestQRCode);
 
