@@ -38,17 +38,14 @@ public class SqreenReaderController {
 
     @FXML
     protected void initialize() {
-        latestQRCode.setOnAction(actionEvent -> {
-          openLink();
-        });
+        latestQRCode.setOnAction(actionEvent -> openLink());
     }
 
     private void openLink() {
         try {
             hyperLinkOpener.open(latestQRCode.getText());
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             throw new IOError(e);
-        } catch (URISyntaxException ignored) {
         }
     }
 

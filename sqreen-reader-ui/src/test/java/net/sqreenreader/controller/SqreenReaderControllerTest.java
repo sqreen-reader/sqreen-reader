@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.awt.Toolkit;
 import java.awt.Rectangle;
 import java.awt.Dimension;
+import java.io.IOError;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
@@ -106,6 +107,17 @@ class SqreenReaderControllerTest {
         sqreenReaderController.initialize();
         latestQRCode.fire();
         verify(hyperLinkOpener, times(1)).open("www.google.com");
+    }
+
+    @Test
+    @DisplayName("Should throw error if cannot open links")
+    void testDoNotOpenLinks() throws IOException, URISyntaxException {
+        Hyperlink latestQRCode = new Hyperlink();
+        latestQRCode.setText("www.google.com");
+        sqreenReaderController.setLatestQRCode(latestQRCode);
+        doThrow(new IOException()).when(hyperLinkOpener).open(anyString());
+        sqreenReaderController.initialize();
+        assertThrows(IOError.class, latestQRCode::fire);
     }
 
 }
