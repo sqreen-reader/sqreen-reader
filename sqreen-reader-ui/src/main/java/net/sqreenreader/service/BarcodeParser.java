@@ -1,8 +1,10 @@
 package net.sqreenreader.service;
 
+import net.qr.Barcode;
+
 import java.awt.Rectangle;
 import java.io.IOException;
 
 public interface BarcodeParser {
-    String parse(Rectangle dimensions) throws IOException;
+    Barcode parse(Rectangle dimensions) throws IOException;
 }

@@ -1,6 +1,7 @@
 package net.sqreenreader.service;
 
 import net.qr.BarCodeReader;
+import net.qr.Barcode;
 import net.screen.ImageGrabber;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class BarcodeParserService implements BarcodeParser {
     }
 
     @Override
-    public String parse(final Rectangle dimensions) throws IOException {
-       return barCodeReader.read(imageGrabber.grab(dimensions)).getText();
+    public Barcode parse(final Rectangle dimensions) throws IOException {
+       return barCodeReader.read(imageGrabber.grab(dimensions));
     }
 }

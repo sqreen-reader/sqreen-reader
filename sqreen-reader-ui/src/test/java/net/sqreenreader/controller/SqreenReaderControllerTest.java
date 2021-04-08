@@ -3,6 +3,7 @@ package net.sqreenreader.controller;
 import javafx.application.Platform;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import net.qr.Barcode;
 import net.sqreenreader.service.BarcodeParser;
 import net.sqreenreader.url.HyperLinkOpener;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,7 +38,7 @@ class SqreenReaderControllerTest {
     @Mock
     private HyperLinkOpener hyperLinkOpener;
 
-    private String expectedBarcodeData = "www.google.com";
+    private Barcode expectedBarCode;
 
     private SqreenReaderController sqreenReaderController;
 
@@ -51,7 +52,7 @@ class SqreenReaderControllerTest {
 
     @BeforeEach
     void setup() {
-
+        expectedBarCode = new Barcode("www.google.com");
         sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit, hyperLinkOpener);
     }
 
@@ -59,16 +60,16 @@ class SqreenReaderControllerTest {
     @DisplayName("Should get barcode")
     void testGetCurrentBarcode() throws IOException {
         when(toolkit.getScreenSize()).thenReturn(new Dimension());
-        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
-        String barCodeData = sqreenReaderController.getCurrentBarCode();
-        assertEquals(expectedBarcodeData, barCodeData);
+        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarCode);
+        Barcode barcode = sqreenReaderController.getCurrentBarCode();
+        assertEquals(expectedBarCode, barcode);
     }
 
     @Test
     @DisplayName("Should add barcode to scene")
     void testUpdateSceneWithBarCode() throws IOException, InterruptedException {
         when(toolkit.getScreenSize()).thenReturn(new Dimension());
-        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarcodeData);
+        when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarCode);
         Label noQRCode = new Label();
         Hyperlink latestQRCode = new Hyperlink();
         sqreenReaderController.setNoQRCode(noQRCode);
@@ -78,7 +79,7 @@ class SqreenReaderControllerTest {
         TimeUnit.SECONDS.sleep(1);
 
         assertTrue(latestQRCode.isVisible());
-        assertEquals(expectedBarcodeData, latestQRCode.getText());
+        assertEquals(expectedBarCode.getText(), latestQRCode.getText());
         assertFalse(noQRCode.isVisible());
     }
 

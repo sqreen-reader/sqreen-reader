@@ -37,9 +37,9 @@ class BarcodeParserServiceTest {
         when(barCodeReader.read(any(BufferedImage.class))).thenReturn(expectedParsedBarcode);
 
         BarcodeParserService barcodeParserService = new BarcodeParserService(imageGrabber, barCodeReader);
-        String parseBarcode = barcodeParserService.parse(new Rectangle());
+        Barcode barcode = barcodeParserService.parse(new Rectangle());
 
-        assertEquals(expectedParsedBarcode.getText(), parseBarcode);
+        assertEquals(expectedParsedBarcode, barcode);
     }
 
 }

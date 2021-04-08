@@ -3,6 +3,7 @@ package net.sqreenreader.controller;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import net.qr.Barcode;
 import net.sqreenreader.service.BarcodeParser;
 import net.sqreenreader.url.HyperLinkOpener;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -50,15 +51,15 @@ public class SqreenReaderController {
     }
 
 
-    public String getCurrentBarCode() throws IOException {
+    public Barcode getCurrentBarCode() throws IOException {
         return barcodeParser.parse(new Rectangle(toolkit.getScreenSize()));
     }
 
     @Scheduled(fixedRate = 1)
     public void updateSceneWithBarCode() throws IOException {
-        String barCode = getCurrentBarCode();
+        Barcode barCode = getCurrentBarCode();
         if (barCode != null) {
-            updateLabels(barCode);
+            updateLabels(barCode.getText());
         }
     }
 
