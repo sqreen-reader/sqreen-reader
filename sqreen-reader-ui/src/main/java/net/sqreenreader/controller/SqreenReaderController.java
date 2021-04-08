@@ -1,8 +1,10 @@
 package net.sqreenreader.controller;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.image.ImageView;
 import net.qr.Barcode;
 import net.sqreenreader.service.BarcodeParser;
 import net.sqreenreader.url.HyperLinkOpener;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import java.awt.Toolkit;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -29,6 +32,9 @@ public class SqreenReaderController {
 
     @FXML
     private Hyperlink latestQRCode;
+
+    @FXML
+    private ImageView qrCodeImage;
 
     public SqreenReaderController(final BarcodeParser barcodeParser, final Toolkit toolkit,
                                   final HyperLinkOpener hyperLinkOpener) {
@@ -59,18 +65,27 @@ public class SqreenReaderController {
     public void updateSceneWithBarCode() throws IOException {
         Barcode barCode = getCurrentBarCode();
         if (barCode != null) {
-            updateLabels(barCode.getText());
+            updateLabels(barCode);
         }
     }
 
-    private void updateLabels(final String barCode) {
+    private void updateLabels(final Barcode barCode) {
         Platform.runLater(() -> {
             noQRCode.setVisible(false);
-            latestQRCode.setVisible(true);
-            latestQRCode.setText(barCode);
+            setQrText(barCode.getText());
+            setQrImage(barCode.getImage());
         });
     }
 
+    private void setQrText(final String text) {
+        latestQRCode.setVisible(true);
+        latestQRCode.setText(text);
+    }
+
+    private void setQrImage(final BufferedImage image) {
+        qrCodeImage.setVisible(true);
+        qrCodeImage.setImage(SwingFXUtils.toFXImage(image, null));
+    }
 
     public void setNoQRCode(final Label noQRCode) {
         this.noQRCode = noQRCode;
@@ -80,4 +95,7 @@ public class SqreenReaderController {
         this.latestQRCode = latestQRCode;
     }
 
+    public void setQrCodeImage(final ImageView qrCodeImage) {
+        this.qrCodeImage = qrCodeImage;
+    }
 }

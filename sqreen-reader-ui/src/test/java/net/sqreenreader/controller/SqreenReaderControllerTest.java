@@ -3,6 +3,7 @@ package net.sqreenreader.controller;
 import javafx.application.Platform;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import net.qr.Barcode;
 import net.sqreenreader.service.BarcodeParser;
 import net.sqreenreader.url.HyperLinkOpener;
@@ -73,8 +74,10 @@ class SqreenReaderControllerTest {
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarCode);
         Label noQRCode = new Label();
         Hyperlink latestQRCode = new Hyperlink();
+        ImageView qrCodeImage = new ImageView();
         sqreenReaderController.setNoQRCode(noQRCode);
         sqreenReaderController.setLatestQRCode(latestQRCode);
+        sqreenReaderController.setQrCodeImage(qrCodeImage);
 
         sqreenReaderController.updateSceneWithBarCode();
         TimeUnit.SECONDS.sleep(1);
@@ -82,6 +85,8 @@ class SqreenReaderControllerTest {
         assertTrue(latestQRCode.isVisible());
         assertEquals(expectedBarCode.getText(), latestQRCode.getText());
         assertFalse(noQRCode.isVisible());
+        assertTrue(qrCodeImage.isVisible());
+        assertNotNull(qrCodeImage.getImage());
     }
 
     @Test
