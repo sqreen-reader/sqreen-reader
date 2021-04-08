@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

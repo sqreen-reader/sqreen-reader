@@ -8,7 +8,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="net.sqreenreader.controller.SqreenReaderController">
     <Label fx:id="noQRCode" text="No Recent QR Codes"/>
-    <Hyperlink fx:id="latestQRCode"/>
+    <Hyperlink fx:id="latestQRCode" visible="false"/>
     <ImageView fx:id="qrCodeImage"
                fitHeight="200" fitWidth="200.0"
                layoutX="69.0" layoutY="322.0"
