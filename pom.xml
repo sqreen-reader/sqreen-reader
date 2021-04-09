@@ -25,6 +25,7 @@
     <module>screen-grabber</module>
     <module>qr-reader</module>
     <module>sqreen-reader-ui</module>
+      <module>sqreen-reader-installer</module>
   </modules>
   <packaging>pom</packaging>
   <name>sQReen Reader</name>
