@@ -23,6 +23,8 @@ import javafx.scene.control.Label;
 @Controller
 public class SqreenReaderController {
 
+    public static final int REFRESH_RATE = 1000;
+
     private final BarcodeParser barcodeParser;
     private final Toolkit toolkit;
     private final HyperLinkOpener hyperLinkOpener;
@@ -61,7 +63,7 @@ public class SqreenReaderController {
         return barcodeParser.parse(new Rectangle(toolkit.getScreenSize()));
     }
 
-    @Scheduled(fixedRate = 1)
+    @Scheduled(fixedRate = REFRESH_RATE)
     public void updateSceneWithBarCode() throws IOException {
         Barcode barCode = getCurrentBarCode();
         if (barCode != null) {
