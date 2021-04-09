@@ -40,7 +40,7 @@
                             <mainClass>org.springframework.boot.loader.JarLauncher</mainClass>
                             <bundleJre>true</bundleJre>
                             <assetsDir>src/main/resources</assetsDir>
-                            <displayName>sQreen Reader</displayName>
+                            <displayName>sQReen Reader</displayName>
                         </configuration>
                     </execution>
                 </executions>
