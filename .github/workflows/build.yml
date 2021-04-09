@@ -62,4 +62,4 @@ jobs:
           java-version: 1.11
 
       - name: Build with Maven
-        run: ./mvnw clean verify -Djava.awt.headless=true
+        run: ./mvnw "-Djava.awt.headless=true" clean verify
