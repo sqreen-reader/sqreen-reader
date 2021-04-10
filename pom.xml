@@ -30,6 +30,17 @@
   <packaging>pom</packaging>
   <name>sQReen Reader</name>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/matthew-js-porter/sqreen-reader</url>
+    </repository>
+    <snapshotRepository>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/matthew-js-porter/sqreen-reader</url>
+    </snapshotRepository>
+  </distributionManagement>
+
   <build>
     <plugins>
       <plugin>
