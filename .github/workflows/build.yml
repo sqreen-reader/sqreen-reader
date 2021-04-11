@@ -48,11 +48,6 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           JAVA_HOME: /usr/java/openjdk-15
 
-      - name: Deploy to Github Packages
-        run: ./mvnw clean deploy -DskipTests -s $GITHUB_WORKSPACE/settings.xml
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
