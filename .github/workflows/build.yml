@@ -51,7 +51,7 @@ jobs:
       - name: Deploy to Github Packages
         run: ./mvnw deploy -s $GITHUB_WORKSPACE/settings.xml
         env:
-          GITHUB_TOKEN: ${{ github.token }
+          GITHUB_TOKEN: ${{ github.token }}
 
   deploy:
     runs-on: ${{ matrix.os }}
