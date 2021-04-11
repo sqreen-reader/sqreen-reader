@@ -47,11 +47,17 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           JAVA_HOME: /usr/java/openjdk-15
+
+      - name: Deploy to Github Packages
+        run: ./mvnw deploy -s $GITHUB_WORKSPACE/settings.xml
+        env:
+          GITHUB_TOKEN: ${{ github.token }
+
   deploy:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest, windows-latest]
     needs: [build]
     steps:
       - uses: actions/checkout@v2
@@ -62,4 +68,9 @@ jobs:
           java-version: 1.11
 
       - name: Build with Maven
-        run: ./mvnw "-Djava.awt.headless=true" clean verify
+        run: ./mvnw "-Djava.awt.headless=true" clean install
+
+      - name: Deploy Installers
+        run: ./mvnw deploy -pl sqreen-reader-installer -s $GITHUB_WORKSPACE/settings.xml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
