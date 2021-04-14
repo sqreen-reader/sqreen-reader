@@ -33,11 +33,11 @@
   <distributionManagement>
     <repository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/matthew-js-porter/sqreen-reader</url>
+      <url>https://maven.pkg.github.com/sqreen-reader/sqreen-reader</url>
     </repository>
     <snapshotRepository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/matthew-js-porter/sqreen-reader</url>
+      <url>https://maven.pkg.github.com/sqreen-reader/sqreen-reader</url>
     </snapshotRepository>
   </distributionManagement>
 
