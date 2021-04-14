@@ -49,7 +49,7 @@ jobs:
 
       - name: Check Sonar Status
         run: |
-          status=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=matthew-js-porter_sqreen-reader)
+          status=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=sqreen-reader_sqreen-reader)
           echo $status | jq '.'
           status=$(echo $status | jq '.projectStatus.status')
           test '"OK"' = $status
