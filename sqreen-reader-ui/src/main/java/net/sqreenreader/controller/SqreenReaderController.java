@@ -11,7 +11,8 @@ import net.sqreenreader.url.HyperLinkOpener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
-import java.awt.Toolkit;
+import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsDevice;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOError;
@@ -26,7 +27,7 @@ public class SqreenReaderController {
     public static final int REFRESH_RATE = 1000;
 
     private final BarcodeParser barcodeParser;
-    private final Toolkit toolkit;
+    private final GraphicsEnvironment graphicsEnvironment;
     private final HyperLinkOpener hyperLinkOpener;
 
     @FXML
@@ -38,10 +39,10 @@ public class SqreenReaderController {
     @FXML
     private ImageView qrCodeImage;
 
-    public SqreenReaderController(final BarcodeParser barcodeParser, final Toolkit toolkit,
+    public SqreenReaderController(final BarcodeParser barcodeParser, final GraphicsEnvironment graphicsEnvironment,
                                   final HyperLinkOpener hyperLinkOpener) {
         this.barcodeParser = barcodeParser;
-        this.toolkit = toolkit;
+        this.graphicsEnvironment = graphicsEnvironment;
         this.hyperLinkOpener = hyperLinkOpener;
     }
 
@@ -60,7 +61,15 @@ public class SqreenReaderController {
 
 
     public Barcode getCurrentBarCode() throws IOException {
-        return barcodeParser.parse(new Rectangle(toolkit.getScreenSize()));
+        return barcodeParser.parse(new Rectangle(getScreenSize()));
+    }
+
+    private Rectangle getScreenSize() {
+        Rectangle screenSize = new Rectangle(0, 0, 0, 0);
+        for (GraphicsDevice graphicsDevice : graphicsEnvironment.getScreenDevices()) {
+            screenSize = screenSize.union(graphicsDevice.getDefaultConfiguration().getBounds());
+        }
+        return screenSize;
     }
 
     @Scheduled(fixedRate = REFRESH_RATE)

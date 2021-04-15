@@ -13,6 +13,7 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.AWTException;
 import java.awt.Desktop;
+import java.awt.GraphicsEnvironment;
 
 
 @Configuration
@@ -31,6 +32,11 @@ public class SqreenReaderConfiguration {
     @Bean
     public Toolkit toolkit() {
         return Toolkit.getDefaultToolkit();
+    }
+
+    @Bean
+    public GraphicsEnvironment graphicsEnvironment() {
+        return GraphicsEnvironment.getLocalGraphicsEnvironment();
     }
 
     @Bean

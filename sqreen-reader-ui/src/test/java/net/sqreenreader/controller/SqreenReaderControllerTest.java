@@ -16,9 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.imageio.ImageIO;
-import java.awt.Toolkit;
-import java.awt.Rectangle;
-import java.awt.Dimension;
+import java.awt.*;
 import java.io.IOError;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -35,7 +33,13 @@ class SqreenReaderControllerTest {
     private BarcodeParser barcodeParser;
 
     @Mock
-    private Toolkit toolkit;
+    private GraphicsEnvironment graphicsEnvironment;
+
+    @Mock
+    private GraphicsDevice graphicsDevice;
+
+    @Mock
+    private GraphicsConfiguration graphicsConfiguration;
 
     @Mock
     private HyperLinkOpener hyperLinkOpener;
@@ -55,13 +59,13 @@ class SqreenReaderControllerTest {
     @BeforeEach
     void setup() throws IOException {
         expectedBarCode = new Barcode("www.google.com", ImageIO.read(getClass().getResourceAsStream("/test.jpg")));
-        sqreenReaderController = new SqreenReaderController(barcodeParser, toolkit, hyperLinkOpener);
+        sqreenReaderController = new SqreenReaderController(barcodeParser, graphicsEnvironment, hyperLinkOpener);
     }
 
     @Test
     @DisplayName("Should get barcode")
     void testGetCurrentBarcode() throws IOException {
-        when(toolkit.getScreenSize()).thenReturn(new Dimension());
+        mockGraphicDevices();
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarCode);
         Barcode barcode = sqreenReaderController.getCurrentBarCode();
         assertEquals(expectedBarCode, barcode);
@@ -70,7 +74,7 @@ class SqreenReaderControllerTest {
     @Test
     @DisplayName("Should add barcode to scene")
     void testUpdateSceneWithBarCode() throws IOException, InterruptedException {
-        when(toolkit.getScreenSize()).thenReturn(new Dimension());
+        mockGraphicDevices();
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(expectedBarCode);
         Label noQRCode = new Label();
         Hyperlink latestQRCode = new Hyperlink();
@@ -92,7 +96,7 @@ class SqreenReaderControllerTest {
     @Test
     @DisplayName("Should not update barcode if null")
     void testNullBarcode() throws IOException, InterruptedException {
-        when(toolkit.getScreenSize()).thenReturn(new Dimension());
+        mockGraphicDevices();
         when(barcodeParser.parse(any(Rectangle.class))).thenReturn(null);
         Label noQRCode = new Label();
         Hyperlink latestQRCode = new Hyperlink();
@@ -125,6 +129,12 @@ class SqreenReaderControllerTest {
         doThrow(new IOException()).when(hyperLinkOpener).open(anyString());
         sqreenReaderController.initialize();
         assertThrows(IOError.class, latestQRCode::fire);
+    }
+
+    private void mockGraphicDevices() {
+        when(graphicsEnvironment.getScreenDevices()).thenReturn(new GraphicsDevice[] {graphicsDevice});
+        when(graphicsDevice.getDefaultConfiguration()).thenReturn(graphicsConfiguration);
+        when(graphicsConfiguration.getBounds()).thenReturn(new Rectangle(100, 100));
     }
 
 }
