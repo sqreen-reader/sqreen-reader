@@ -22,6 +22,8 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     private final String title;
     private final Toolkit toolkit;
 
+    private Stage stage;
+
     private static final int WIDTH = 800;
     private static final int LENGTH = 600;
 
@@ -34,9 +36,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
 
     @Override
-    public void onApplicationEvent(final StageReadyEvent stageReadyEvent) {
+    public synchronized void onApplicationEvent(final StageReadyEvent stageReadyEvent) {
         try {
-            Stage stage = stageReadyEvent.getStage();
+            stage = stageReadyEvent.getStage();
             FXMLLoader fxmlLoader = new FXMLLoader(new ClassPathResource("/fxml/sqreen-reader.fxml").getURL());
             fxmlLoader.setControllerFactory(applicationContext::getBean);
 
@@ -60,5 +62,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
             taskbar.setIconImage(image);
         } catch (UnsupportedOperationException ignored) {
         }
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }
