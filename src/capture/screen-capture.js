@@ -1,14 +1,12 @@
-
-const { desktopCapturer } = require('electron');
-
-class ScreenCapture {
-    constructor(options) {
+class ScreenCapturer {
+    constructor(desktopCapturer, options) {
+        this.desktopCapturer = desktopCapturer;
         this.options = options;
     }
 
     capture() {
-        return desktopCapturer.getSources(this.options);
+        return this.desktopCapturer.getSources(this.options);
     }
 }
 
-module.exports = ScreenCapture;
+module.exports = ScreenCapturer;

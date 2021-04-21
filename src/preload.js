@@ -1,6 +1,7 @@
 const SqreenCapture = require('./capture/screen-capture');
+const { desktopCapturer } = require('electron');
 window.addEventListener('DOMContentLoaded', ()=>{
-    new SqreenCapture({ types: ['screen'], thumbnailSize: {
+    new SqreenCapture(desktopCapturer, { types: ['screen'], thumbnailSize: {
             width: 1500,
             height: 1500
         }}).capture()
