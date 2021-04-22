@@ -1,7 +1,7 @@
 const QrCodeReader = require('./qr-code-reader');
 const jpeg = require('jpeg-js');
 const sinon = require('sinon');
-const {expect} = require('chai')
+const {expect} = require('chai');
 const proxyquire = require('proxyquire');
 
 describe('QrCodeReader', ()=>{
