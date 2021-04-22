@@ -1,11 +1,19 @@
+const jsQR = require('jsqr');
+const jpeg = require('jpeg-js');
+
 class QrCodeReader {
-    constructor(qrCode) {
-        this.qrCode = qrCode;
+    constructor() {
     }
 
     read(image, callback) {
-        this.qrCode.callback = callback;
-        this.qrCode.decode(image.toDataURL());
+        const rawImageData = jpeg.decode(image.toJPEG(100));
+        const qrCode = jsQR(rawImageData.data, rawImageData.width, rawImageData.height);
+        if(qrCode) {
+            callback({
+                data: qrCode.data,
+                image: null
+            });
+        }
     }
 }
 
