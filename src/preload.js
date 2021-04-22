@@ -17,6 +17,8 @@ window.addEventListener('DOMContentLoaded', ()=>{
                     qrCodeLink = document.getElementById('qr-code');
                     qrCodeLink.innerText = qrCode.data;
                     qrCodeLink.href = qrCode.data;
+
+                    document.getElementById('screen').src = qrCode.image;
                 });
             });
     }, 1000);
