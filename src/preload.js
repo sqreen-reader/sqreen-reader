@@ -2,6 +2,7 @@ const SqreenCapture = require('./capture/screen-capture');
 const QrCodeReader = require('./qrcode/qr-code-reader');
 const { desktopCapturer } = require('electron');
 const ReadQrCodeHandler = require('./handler/read-qr-code-handler');
+const DefaultProtocolUrl = require('./url/default-protocol-url');
 
 window.addEventListener('DOMContentLoaded', ()=>{
     const sqreenCapture = new SqreenCapture(desktopCapturer,
@@ -18,7 +19,12 @@ window.addEventListener('DOMContentLoaded', ()=>{
             console.log(qrCode);
             const qrCodeLink = document.getElementById('qr-code');
             qrCodeLink.innerText = qrCode.data;
-            qrCodeLink.href = qrCode.data;
+            try {
+                const url = new DefaultProtocolUrl(qrCode.data);
+                qrCodeLink.href = url.href;
+            } catch (_) {
+                qrCodeLink.href ='#';
+            }
 
             document.getElementById('screen').src = qrCode.image;
         });
