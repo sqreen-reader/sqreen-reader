@@ -47,6 +47,18 @@
           "name": "@electron-forge/maker-rpm",
           "config": {}
         }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "sqreen-reader",
+              "name": "sqreen-reader"
+            },
+            "prerelease": true
+          }
+        }
       ]
     }
   },
@@ -62,6 +74,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "@electron-forge/publisher-github": "*",
     "chai": "^4.3.4",
     "electron": "12.0.4",
     "mocha": "^8.3.2",
