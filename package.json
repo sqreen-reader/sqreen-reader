@@ -21,7 +21,9 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon" : "src/assets/icons/icon"
+        "icon" : "src/assets/icons/icon",
+        "executableName": "sqreen-reader",
+        "name": "sQReen Reader"
       },
       "makers": [
         {
