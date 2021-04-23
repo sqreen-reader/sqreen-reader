@@ -21,7 +21,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon" : "src/assets/icons/icon",
+        "icon": "src/assets/icons/icon",
         "executableName": "sqreen-reader",
         "name": "sQReen Reader"
       },
@@ -29,7 +29,8 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "sqreen_reader"
+            "name": "sqreen_reader",
+            "exe": "sqreen-reader.exe"
           }
         },
         {
