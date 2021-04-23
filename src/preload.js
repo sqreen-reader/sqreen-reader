@@ -26,7 +26,13 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 qrCodeLink.href ='#';
             }
 
-            document.getElementById('screen').src = qrCode.image;
+            const image =document.getElementById('qr-code-image');
+            image.src = qrCode.image;
+
+            qrCodeLink.style.visibility = 'visible';
+            image.style.visibility = 'visible';
+            document.getElementById('no-qr-code').style.visibility = 'hidden';
+
         });
     }, 1000);
 });
