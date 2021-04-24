@@ -1,6 +1,12 @@
 const { app, BrowserWindow } = require('electron');
+const log = require('electron-log');
+const {autoUpdater} = require("electron-updater")
 const shell = require('electron').shell;
 const path = require('path');
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -32,7 +38,10 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', ()=>{
+  autoUpdater.checkForUpdatesAndNotify();
+  createWindow();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
@@ -49,6 +58,28 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  sendStatusToWindow('Update downloaded');
 });
 
 // In this file you can include the rest of your app's specific main process
