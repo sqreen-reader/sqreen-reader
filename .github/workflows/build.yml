@@ -41,6 +41,8 @@ jobs:
       - run: npm run dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLEID: ${{ secrets.APPLE_ID }}
+          APPLEIDPASS: ${{ secrets.APPLE_ID_APP_PASS }}
 
 
   publish-windows:
