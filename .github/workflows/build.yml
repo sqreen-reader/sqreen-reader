@@ -29,6 +29,10 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v2
+      - uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.MAC_CODESIGN_CERT }}
+          p12-password: ${{ secrets.MAC_CODESIGN_SECRET }}
       - name: publish packages
         uses: actions/setup-node@v1
         with:
@@ -37,8 +41,6 @@ jobs:
       - run: npm run dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CSC_LINK: ${{ secrets.MAC_CODESIGN_CERT }}
-          CSC_KEY_PASSWORD: ${{ secrets.MAC_CODESIGN_SECRET }}
 
 
   publish-windows:
