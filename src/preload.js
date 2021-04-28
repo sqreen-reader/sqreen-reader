@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
                 qrCodeLink.href ='#';
             }
 
-            const image =document.getElementById('qr-code-image');
+            const image = document.getElementById('qr-code-image');
             image.src = qrCode.image;
 
             qrCodeLink.style.visibility = 'visible';
