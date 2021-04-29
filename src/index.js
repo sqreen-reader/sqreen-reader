@@ -1,6 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const {app, BrowserWindow} = require('electron');
 const log = require('electron-log');
-const {autoUpdater} = require("electron-updater")
+const {autoUpdater} = require('electron-updater');
 const shell = require('electron').shell;
 const path = require('path');
 
@@ -9,6 +9,7 @@ autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
+// eslint-disable-next-line max-len
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
@@ -19,9 +20,9 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
     },
-    icon: `${__dirname}/icon.png`
+    icon: `${__dirname}/icon.png`,
   });
 
   autoUpdater.checkForUpdatesAndNotify();
@@ -32,7 +33,7 @@ const createWindow = () => {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
-  mainWindow.webContents.on('new-window', (e,url)=>{
+  mainWindow.webContents.on('new-window', (e, url)=>{
     e.preventDefault();
     shell.openExternal(url);
   });
@@ -68,22 +69,23 @@ function sendStatusToWindow(text) {
 
 autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...');
-})
+});
 autoUpdater.on('update-available', (info) => {
   sendStatusToWindow('Update available.');
-})
+});
 autoUpdater.on('update-not-available', (info) => {
   sendStatusToWindow('Update not available.');
-})
+});
 autoUpdater.on('error', (err) => {
   sendStatusToWindow('Error in auto-updater. ' + err);
-})
+});
 autoUpdater.on('download-progress', (progressObj) => {
-  let log_message = "Download speed: " + progressObj.bytesPerSecond;
-  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-  sendStatusToWindow(log_message);
-})
+  let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;
+  logMessage = logMessage + ' - Downloaded ' + progressObj.percent + '%';
+  logMessage = logMessage + ' (' + progressObj
+      .transferred + '/' + progressObj.total + ')';
+  sendStatusToWindow(logMessage);
+});
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
 });
