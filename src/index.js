@@ -12,10 +12,10 @@ log.info('App starting...');
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
-
+let mainWindow;
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
@@ -59,6 +59,10 @@ app.on('activate', () => {
     createWindow();
   }
 });
+function sendStatusToWindow(text) {
+  log.info(text);
+  mainWindow.webContents.send('message', text);
+}
 
 autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...');
