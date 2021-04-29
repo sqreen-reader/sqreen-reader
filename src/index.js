@@ -23,6 +23,8 @@ const createWindow = () => {
     }
   });
 
+  autoUpdater.checkForUpdatesAndNotify();
+
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
@@ -39,7 +41,6 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', ()=>{
-  autoUpdater.checkForUpdatesAndNotify();
   createWindow();
 });
 
