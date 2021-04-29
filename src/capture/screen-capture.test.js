@@ -22,6 +22,4 @@ describe('ScreenCapturer', ()=> {
  * Mock Electron NativeImage class
  */
 class MockNativeImage {
-  constructor() {
-  }
 }
