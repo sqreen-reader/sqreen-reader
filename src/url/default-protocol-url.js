@@ -4,7 +4,7 @@ class DefaultProtocolURL extends URL {
       super(url);
     } catch (_) {
       // eslint-disable-next-line constructor-super
-      super(`https://${url}`);
+      super(`https://${url}`); // NOSONAR
     }
   }
 }
