@@ -34,6 +34,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+      - name: Check Sonar Status
+        run: |
+          status=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=sqreen-reader_sqreen-reader)
+          echo $status | jq '.'
+          status=$(echo $status | jq '.projectStatus.status')
+          test '"OK"' = $status
+
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
