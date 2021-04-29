@@ -3,7 +3,7 @@ const {expect} = require('chai');
 
 describe('DefaultProtocolURL', ()=>{
   it('constructs urls with a protocol', ()=>{
-    const urlWithProtocol = 'http://www.sqreen-reader.github.io/';
+    const urlWithProtocol = 'http://www.sqreen-reader.github.io/'; // NOSONAR
     const url = new DefaultProtocolURL(urlWithProtocol);
     expect(url.href).to.equal(urlWithProtocol);
   });
