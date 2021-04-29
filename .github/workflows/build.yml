@@ -21,7 +21,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
@@ -62,7 +62,7 @@ jobs:
           p12-file-base64: ${{ secrets.MAC_CODESIGN_CERT }}
           p12-password: ${{ secrets.MAC_CODESIGN_SECRET }}
       - name: publish packages
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
@@ -82,7 +82,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: publish packages
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
@@ -99,7 +99,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: publish packages
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
