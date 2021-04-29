@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+}
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 5vmax;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#qr-code {
+  visibility: hidden;
+
+}
+
+#qr-code-image {
+  visibility: hidden;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding-top: 2%;
+}

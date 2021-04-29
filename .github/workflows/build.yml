@@ -6,27 +6,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        language: [ 'java' ]
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 1.11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.11
-
-      - name: Build with Maven
-        run: ./mvnw clean verify -Djava.awt.headless=true
-
-  scan:
-    needs: [build]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        language: [ 'java' ]
+        language: [javascript]
+        node-version: [15.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v2
@@ -35,17 +20,19 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: ${{ matrix.language }}
-
-      - name: Set up JDK 1.11
-        uses: actions/setup-java@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          java-version: 1.11
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
 
       - name: SonarCloud Scan
-        run: ./mvnw -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Djava.awt.headless=true
+        uses: SonarSource/sonarcloud-github-action@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Sonar Status
         run: |
@@ -54,48 +41,68 @@ jobs:
           status=$(echo $status | jq '.projectStatus.status')
           test '"OK"' = $status
 
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          JAVA_HOME: /usr/java/openjdk-15
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [scan]
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 1.11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.11
-
-      - name: Deploy to Github packages
-        run: ./mvnw "-Djava.awt.headless=true" clean deploy -s $GITHUB_WORKSPACE/settings.xml
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-
-  deploy-installers:
-    runs-on: ${{ matrix.os }}
+  publish-mac:
+    runs-on: macos-latest
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
-    needs: [scan]
+        node-version: [15.x]
+    needs: [build]
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up JDK 1.11
-        uses: actions/setup-java@v1
+      - uses: apple-actions/import-codesign-certs@v1
         with:
-          java-version: 1.11
-
-      - name: Build with Maven
-        run: ./mvnw "-Djava.awt.headless=true" clean install
-
-      - name: Deploy Installers
-        run: ./mvnw deploy -pl sqreen-reader-installer -s settings.xml
+          p12-file-base64: ${{ secrets.MAC_CODESIGN_CERT }}
+          p12-password: ${{ secrets.MAC_CODESIGN_SECRET }}
+      - name: publish packages
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run dist
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLEID: ${{ secrets.APPLE_ID }}
+          APPLEIDPASS: ${{ secrets.APPLE_ID_APP_PASS }}
+
+
+  publish-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+      - name: publish packages
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+      - name: publish packages
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
