@@ -17,13 +17,13 @@ describe('QrCodeReader', ()=>{
       const jsQRStub = sinon.stub();
       jsQRStub.returns({data: 'hello'});
 
-      const QrCodeReader = proxyquire.load(
+      const ProxyQrCodeReader = proxyquire.load(
           './qr-code-reader.js', {
             'jsqr': jsQRStub,
           },
       );
 
-      const qrReader = new QrCodeReader();
+      const qrReader = new ProxyQrCodeReader();
 
       qrReader.read(new MockNativeImage(), (result)=>{
         expect(result.data).to.equal('hello');
@@ -46,9 +46,6 @@ describe('QrCodeReader', ()=>{
  * Mock Electron NativeImage class
  */
 class MockNativeImage {
-  constructor() {
-  }
-
   toJPEG() {
     return 'data';
   }
