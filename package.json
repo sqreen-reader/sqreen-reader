@@ -5,7 +5,7 @@
   "description": "My Electron application description",
   "main": "src/index.js",
   "scripts": {
-    "test": "nyc --reporter=lcov --reporter=html mocha",
+    "test": "nyc --reporter=lcov --reporter=html --reporter=text mocha",
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
