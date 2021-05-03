@@ -5,8 +5,10 @@ class ReadQrCodeHandler {
   }
 
   handle(callback) {
-    this.screenCapturer.capture().then((source) => {
-      this.qrCodeReader.read(source[0].thumbnail, callback);
+    this.screenCapturer.capture().then((sources) => {
+      sources.forEach((source)=>{
+        this.qrCodeReader.read(source.thumbnail, callback);
+      });
     });
   }
 }
