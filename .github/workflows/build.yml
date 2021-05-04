@@ -6,9 +6,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container:
-      options: --user 1200
-      image: selenium/standalone-chrome
+    services:
+      selenium:
+        image: selenium/standalone-chrome
 
     strategy:
       matrix:
