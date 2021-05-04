@@ -11,7 +11,7 @@
     "dist": "electron-builder",
     "release": "electron-builder",
     "lint": "eslint .",
-    "e2e": "mocha e2e"
+    "test:e2e": "mocha e2e"
   },
   "keywords": [],
   "author": {
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "chai": "4.3.4",
+    "dotenv": "^8.2.0",
     "electron": "12.0.5",
     "electron-builder": "22.10.5",
     "electron-notarize": "1.0.0",

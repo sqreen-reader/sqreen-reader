@@ -1,5 +1,5 @@
 const ReadQrCodeHandler = require('./read-qr-code-handler');
-const ScreenCapturer = require('../capture/screen-capture');
+const {ScreenCapturer} = require('../capture/screen-capture');
 const QrCodeReader = require('../qrcode/qr-code-reader');
 const sinon = require('sinon');
 

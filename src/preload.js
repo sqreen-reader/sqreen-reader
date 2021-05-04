@@ -1,18 +1,27 @@
-const SqreenCapture = require('./capture/screen-capture');
+const {ScreenCapturer,
+  SpectronScreenCapturer} = require('./capture/screen-capture');
 const QrCodeReader = require('./qrcode/qr-code-reader');
 const {desktopCapturer} = require('electron');
 const ReadQrCodeHandler = require('./handler/read-qr-code-handler');
 const DefaultProtocolUrl = require('./url/default-protocol-url');
 
 window.addEventListener('DOMContentLoaded', ()=>{
-  const sqreenCapture = new SqreenCapture(desktopCapturer,
-      {types: ['screen'], thumbnailSize: {
-        width: 2000,
-        height: 2000,
-      }});
+  const sqreenCapture = () => {
+    if (process.env.SPECTRON === 'true') {
+      console.log('spectron');
+      return new SpectronScreenCapturer();
+    } else {
+      console.log('no spectron');
+      return new ScreenCapturer(desktopCapturer,
+          {types: ['screen'], thumbnailSize: {
+            width: 2000,
+            height: 2000,
+          }});
+    }
+  };
 
   const qrCodeReader = new QrCodeReader();
-  const handler = new ReadQrCodeHandler(sqreenCapture, qrCodeReader);
+  const handler = new ReadQrCodeHandler(sqreenCapture(), qrCodeReader);
 
   setInterval(()=>{
     handler.handle((qrCode) => {

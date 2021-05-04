@@ -1,4 +1,4 @@
-const ScreenCapturer = require('./screen-capture');
+const {ScreenCapturer} = require('./screen-capture');
 const {expect} = require('chai');
 
 describe('ScreenCapturer', ()=> {
