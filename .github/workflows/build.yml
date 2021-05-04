@@ -6,7 +6,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: selenium/standalone-chrome
+    container:
+      options: --user 1200
+      image: selenium/standalone-chrome
+
     strategy:
       matrix:
         language: [javascript]
