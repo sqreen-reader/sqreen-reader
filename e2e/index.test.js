@@ -10,6 +10,10 @@ const app = new Application({
   env: {
     SPECTRON: true,
   },
+  chromeDriverArgs: [
+    '--no-sandbox',
+    '--disable-dev-shm-usage',
+  ],
 });
 
 describe('sQReen Reader', function() {
