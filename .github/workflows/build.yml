@@ -7,17 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        language: [javascript]
         node-version: [15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
-        with:
-          languages: ${{ matrix.language }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -29,7 +23,6 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        language: [javascript]
         node-version: [15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     needs: [build]
