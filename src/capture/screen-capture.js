@@ -14,9 +14,7 @@ class ScreenCapturer {
 class SpectronScreenCapturer extends ScreenCapturer {
   capture() {
     const sources = [new SpectronDesktopCapturerSource()];
-    return new Promise(((resolve) => {
-      resolve(sources);
-    }));
+    return Promise.resolve(sources);
   }
 }
 
