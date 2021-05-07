@@ -8,10 +8,8 @@ const DefaultProtocolUrl = require('./url/default-protocol-url');
 window.addEventListener('DOMContentLoaded', ()=>{
   const sqreenCapture = () => {
     if (process.env.SPECTRON === 'true') {
-      console.log('spectron');
       return new SpectronScreenCapturer();
     } else {
-      console.log('no spectron');
       return new ScreenCapturer(desktopCapturer,
           {types: ['screen'], thumbnailSize: {
             width: 2000,
