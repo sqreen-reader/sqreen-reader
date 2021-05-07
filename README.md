@@ -1,5 +1,6 @@
 # ![sQreen Reader Logo](sqreen-reader.png) sQReen Reader [![Build sQReen Reader](https://github.com/sqreen-reader/sqreen-reader/actions/workflows/build.yml/badge.svg)](https://github.com/sqreen-reader/sqreen-reader/actions/workflows/build.yml) 
-sQreen Reader watches your screen for QR codes and automatically reads them and provides links for you to be able to easily open hyperlinks embedded in QR codes.
+sQReen Reader is a desktop tool that watches your screen for QR codes and gives you a way to open
+the hyperlinks embedded in the QR code.
 
 # Build
 sQReen reader requires nodeJS to run. To build sQReen reader run the following command:
