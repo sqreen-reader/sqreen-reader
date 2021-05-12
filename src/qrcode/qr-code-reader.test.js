@@ -39,6 +39,24 @@ describe('QrCodeReader', ()=>{
 
       expect(callback.called).to.equal(false);
     });
+
+    it('should not run callback if there is no data', ()=>{
+      const jsQRStub = sinon.stub();
+      jsQRStub.returns({data: ''});
+
+      const ProxyQrCodeReader = proxyquire.load(
+          './qr-code-reader.js', {
+            'jsqr': jsQRStub,
+          },
+      );
+
+      const qrReader = new ProxyQrCodeReader();
+      const callback = sinon.spy();
+
+      qrReader.read(new MockNativeImage(), callback);
+
+      expect(callback.called).to.equal(false);
+    });
   });
 });
 

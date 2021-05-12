@@ -7,7 +7,7 @@ class QrCodeReader {
     const rawImageData = jpeg.decode(image.toJPEG(100));
     const qrCode = jsQR(rawImageData.data, rawImageData.width,
         rawImageData.height);
-    if (qrCode) {
+    if (qrCode && !this.isEmpty(qrCode.data)) {
       QRCode.toDataURL(qrCode.data, (err, url)=>{
         callback({
           data: qrCode.data,
@@ -15,6 +15,10 @@ class QrCodeReader {
         });
       });
     }
+  }
+
+  isEmpty(str) {
+    return !str || str === '';
   }
 }
 
