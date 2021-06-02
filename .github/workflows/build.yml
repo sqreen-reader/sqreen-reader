@@ -81,6 +81,8 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
+        with:
+          category: "code_scan"
   publish-mac:
     runs-on: macos-latest
     strategy:
