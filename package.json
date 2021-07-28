@@ -1,8 +1,8 @@
 {
   "name": "sqreen-reader",
   "productName": "sQReen Reader",
-  "version": "2.0.4",
-  "description": "My Electron application description",
+  "version": "2.0.5",
+  "description": "sQReen Reader is a desktop tool that watches your screen for QR codes and gives you a way to open the hyperlinks embedded in the QR code.",
   "main": "src/index.js",
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=html --reporter=text mocha",
