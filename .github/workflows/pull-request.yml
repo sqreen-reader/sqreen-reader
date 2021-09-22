@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: nanasess/setup-chromedriver@master
         with:
-          chromedriver-version: '94.0.4606.51'
+          chromedriver-version: '94.0.4606.41'
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
