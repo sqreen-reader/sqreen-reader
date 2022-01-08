@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run test:e2e
+      - run: npm run wdio
 
   scan:
     runs-on: ubuntu-latest
