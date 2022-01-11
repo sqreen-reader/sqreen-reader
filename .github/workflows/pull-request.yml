@@ -20,7 +20,7 @@ jobs:
       - run: npm run lint
       - run: npm test
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [15.x]

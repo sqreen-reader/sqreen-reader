@@ -13,7 +13,7 @@ exports.config = {
     'goog:chromeOptions': {
       binary: 'node_modules/.bin/electron', // Path to your Electron binary.
       // eslint-disable-next-line max-len
-      args: [`app=${__dirname}`], // Optional, perhaps 'app=' + /path/to/your/app/
+      args: [`app=${__dirname}`, 'headless', 'disable-gpu'], // Optional, perhaps 'app=' + /path/to/your/app/
     },
   }],
 
