@@ -39,9 +39,9 @@
         "qrcode": "^1.5.0"
     },
     "devDependencies": {
-        "@wdio/cli": "7.16.14",
-        "@wdio/local-runner": "7.16.14",
-        "@wdio/mocha-framework": "7.16.14",
+        "@wdio/cli": "7.16.15",
+        "@wdio/local-runner": "7.16.15",
+        "@wdio/mocha-framework": "7.16.15",
         "@wdio/spec-reporter": "7.16.14",
         "chai": "4.3.6",
         "chromedriver": "96.0.0",
