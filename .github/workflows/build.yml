@@ -13,7 +13,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -29,7 +29,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     needs: [build]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -47,7 +47,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
@@ -90,7 +90,7 @@ jobs:
         node-version: [15.x]
     needs: [build, scan, test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: apple-actions/import-codesign-certs@v1
         with:
           p12-file-base64: ${{ secrets.MAC_CODESIGN_CERT }}
@@ -114,7 +114,7 @@ jobs:
         node-version: [15.x]
     needs: [build, scan, test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: publish packages
         uses: actions/setup-node@v2
         with:
@@ -131,7 +131,7 @@ jobs:
         node-version: [15.x]
     needs: [build, scan, test]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: publish packages
         uses: actions/setup-node@v2
         with:
